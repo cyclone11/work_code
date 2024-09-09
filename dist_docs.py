@@ -49,7 +49,7 @@ def run_npm_build_and_setup_server(base_dir):
     except subprocess.CalledProcessError as e:
         print(f"启动 HTTP 服务器失败: {e}")
 
-# 示例使用
-base_directory = r'F:\Desktop\ed-docs-new-style'  # 将此路径替换为实际路径
-
-run_npm_build_and_setup_server(base_directory)
+# # 示例使用
+# base_directory = r'F:\Desktop\ed-docs-new-style'  # 将此路径替换为实际路径
+#
+# run_npm_build_and_setup_server(base_directory)

@@ -30,9 +30,9 @@ def convert_md_table_to_html(md_table):
     html_table += '  </tbody>\n</table>\n'
     return html_table
 
-def process_markdown_file_in_place(input_file):
+def process_markdown_file(input_file, output_file):
     """
-    处理 Markdown 文件，将其中的 Markdown 表格转换为 HTML 表格，并直接修改文件。
+    处理 Markdown 文件，将其中的 Markdown 表格转换为 HTML 表格，并将结果保存到输出文件。
     """
     with open(input_file, 'r', encoding='utf-8') as file:
         content = file.read()
@@ -48,14 +48,15 @@ def process_markdown_file_in_place(input_file):
         html_table = convert_md_table_to_html(md_table)
         new_content = new_content.replace(md_table, html_table)
 
-    # 将转换后的内容覆盖写回原文件
-    with open(input_file, 'w', encoding='utf-8') as file:
+    # 将转换后的内容写入输出文件
+    with open(output_file, 'w', encoding='utf-8') as file:
         file.write(new_content)
 
-    print(f"Markdown 表格已转换为 HTML 表格并写回 {input_file}")
+    print(f"完成第1步，Markdown 表格已转换为 HTML 表格并写入 {output_file}")
 
-# 示例使用，指定输入 Markdown 文件
-input_file = r'F:\Desktop\ed-docs-new-style\docs\zh\hmi2020-101c\ds\README.md'
-
-# 调用函数，直接修改文件中的 Markdown 表格为 HTML 表格
-process_markdown_file_in_place(input_file)
+# # 示例使用，指定输入 Markdown 文件和输出 HTML 文件
+# input_file = r'F:\Desktop\ed-docs-new-style\docs\zh\ipc2100\um\1-hardware\README.md'
+# output_file = 'output.md'
+#
+# # 调用函数，将 Markdown 表格转换为 HTML 表格，并保存到输出文件
+# process_markdown_file(input_file, output_file)
