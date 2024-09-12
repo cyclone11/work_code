@@ -36,7 +36,7 @@ def convert_md_table_to_html(md_table):
     html_table += '  </tbody>\n</table>\n'
     return html_table
 
-def process_markdown_file(input_file):
+def table_to_html(input_file):
     """
     处理 Markdown 文件，将其中的 Markdown 表格转换为 HTML 表格，并将结果覆盖保存到原文件。
     """
@@ -59,8 +59,8 @@ def process_markdown_file(input_file):
         file.write(new_content)
     print(f"完成，Markdown 表格已转换为 HTML 表格并覆盖保存到 {input_file}")
 
-# 示例使用，指定输入 Markdown 文件
-input_file = r'F:\Desktop\temp\zh\hmi2120-070c\um\1-hardware\README.md'
-
-# 调用函数，将 Markdown 表格转换为 HTML 表格，并覆盖保存到原文件
-process_markdown_file(input_file)
+# # 示例使用，指定输入 Markdown 文件
+# input_file = r'F:\Desktop\temp\zh\hmi2120-070c\um\1-hardware\README.md'
+#
+# # 调用函数，将 Markdown 表格转换为 HTML 表格，并覆盖保存到原文件
+# process_markdown_file(input_file)

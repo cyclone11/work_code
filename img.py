@@ -77,22 +77,33 @@ def cleanup_images_in_directory(input_file, images_dir):
                 print(f'删除图片: {image}')
 
 # 功能4: 将目录 'Images' 重命名为 'images' 并修正文档中的图片路径
-def rename_images_directory_and_update_paths(input_file, images_dir):
-    """如果目录 'Images' 存在，将其重命名为 'images' 并更新文档中的图片路径"""
-    markdown_text = read_file(input_file)
+def rename_images_directory_and_update_paths(input_file, images_dir, markdown_text):
+    """如果目录 'Images' 存在，将其重命名为 'images' 并更新文档中的图片路径；无论目录是否存在，都会替换文档中的图片路径（严格区分大小写）"""
+
+    # 读取 Markdown 文件内容
+    # markdown_text = read_file(input_file)
+
+    # 计算 'images' 目录的路径
     images_dir_lower = os.path.join(os.path.dirname(images_dir), 'images')
 
+    # 如果 'Images' 目录存在，重命名为 'images'
     if os.path.isdir(images_dir):
-        # 重命名目录 'Images' 为 'images'
         os.rename(images_dir, images_dir_lower)
         print(f"重命名目录: {images_dir} -> {images_dir_lower}")
+    else:
+        print(f"目录 {images_dir} 不存在，跳过重命名")
 
-        # 替换文档中的图片路径 'Images' -> 'images'
-        # 处理相对路径，包含 ./Images/ 和 /Images/ 两种情况
-        markdown_text = re.sub(r'src=["\']\./Images/', 'src="./images/', markdown_text)
-        markdown_text = re.sub(r'src=["\']/Images/', 'src="/images/', markdown_text)
-        write_file(input_file, markdown_text)
-        print(f"文档中的图片路径已更新: './Images/' -> './images/'")
+    # 无论目录是否存在，替换文档中的图片路径，严格区分大小写
+    # 使用正则表达式，匹配 src 里面的 'Images' 部分，包含 ./Images/ 和 /Images/ 两种情况
+    markdown_text = re.sub(r'src=["\']\.?/Images/', 'src="./images/', markdown_text)
+
+    # 将更新后的内容写回原文件
+    write_file(input_file, markdown_text)
+
+    # 读取写入后的文件内容来确认更改
+    print(f"文档中的图片路径已更新: './Images/' -> './images/'")
+    return markdown_text
+
 
 # 从input_file生成Images目录路径
 def get_images_directory(input_file):
@@ -103,8 +114,10 @@ def get_images_directory(input_file):
 
     # 检测 'Images' 或 'images' 是否存在
     if os.path.isdir(images_dir_upper):
+        print(images_dir_upper)
         return images_dir_upper
     elif os.path.isdir(images_dir_lower):
+        print(images_dir_lower)
         return images_dir_lower
     else:
         print("Error: 找不到 'Images' 或 'images' 目录")
@@ -117,6 +130,7 @@ def process_markdown(input_file, operations):
 
     # 获取图片目录
     images_dir = get_images_directory(input_file)
+    print(images_dir)
     if not images_dir:
         return  # 如果没有找到有效的图片目录，则退出
 
@@ -132,18 +146,18 @@ def process_markdown(input_file, operations):
             cleanup_images_in_directory(input_file, images_dir)
         elif operation == 4:
             print("执行功能4: 将 'Images' 目录重命名为 'images' 并更新图片路径")
-            rename_images_directory_and_update_paths(input_file, images_dir)
+            markdown_text = rename_images_directory_and_update_paths(input_file, images_dir, markdown_text)
 
     write_file(input_file, markdown_text)
     print(f"文件已处理并保存: {input_file}")
 
 # 调用主函数
-input_file = r'F:\Desktop\ed-docs-new-style\docs\zh\ipc2400\ds\README.md'
+# input_file = r'F:\Desktop\ed-docs-new-style\docs\zh\ipc2400\ds\README.md'
 
 # 1 将Markdown格式的图片转换为HTML格式
 # 2 格式化<img>为alt，src，ma-width
 # 3 删除images中多余的图片
-# 4 将 'Images' 重命名为 'images' 并更新图片路径
-operations = [1, 2]  # 根据需要调整执行顺序，例如 [3, 2, 1] 或 [1] 或其他组合
-
-process_markdown(input_file, operations)
+# 4 将 'images' 重命名为 'images' 并更新图片路径
+# operations = [1, 2]  # 根据需要调整执行顺序，例如 [3, 2, 1] 或 [1] 或其他组合
+#
+# process_markdown(input_file, operations)
