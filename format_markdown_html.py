@@ -45,7 +45,7 @@ if __name__ == "__main__":
     # 2 格式化所有html表格
     table_list = [1, 2]
 
-    input_file = r"F:\Desktop\temp\zh\ipc2500\ds\README.md"
+    input_file = r"F:\Desktop\ed-docs\docs\zh\hmi3020-101c\ds\README.md"
     # 检查文件是否存在
     if not os.path.isfile(input_file):
         print(f"文件 {input_file} 不存在，请检查路径。")
