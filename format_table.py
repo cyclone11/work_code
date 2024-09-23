@@ -218,7 +218,6 @@ def create_new_table(table_data, indent="  "):
     return html_table
 
 
-
 def format_all_table(file_path):
     """格式化所有表格"""
     md_content = read_markdown(file_path)
