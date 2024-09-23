@@ -9,7 +9,7 @@ def replace_asterisks_in_file(file_path):
     content = re.sub(r'(^|\n)\s+`', r'\1`', content)
 
     # 第二步：匹配并替换以 ` 开头并以 ` 结束的内容
-    pattern = r'`([^`]*)`'
+    pattern = r'`([^`]*)`\n'
     modified_content = re.sub(pattern, r'```sh\n\1\n```', content)
 
     # 第三步：删除行首到 ```sh 之前的空格
